@@ -27,7 +27,7 @@ namespace DBManager
 
             initializeTable(dgrClassifica, cmd.ExecuteReader());
 
-            dropDownMenu.Visible = true;
+            dropDownMenu.Enabled = true;
 
         }
 
@@ -88,7 +88,41 @@ namespace DBManager
                 cmd = new MySqlCommand(sql, con);
 
                 initializeTable(table, cmd.ExecuteReader());
-            }   
+            }
+
+            if (dataTable.Equals("tesserato"))
+            {
+                btnAddRecord.Enabled = true;
+                btnDeleteRecord.Enabled = true;
+            } else
+            {
+                btnAddRecord.Enabled = false;
+                btnDeleteRecord.Enabled = false;
+            }
+
+        }
+
+        private void btnDeleteRecord_Click(object sender, EventArgs e)
+        {
+
+            sql = $"DELETE FROM tesserato ORDER BY codicetessera DESC LIMIT 1";
+            cmd = new MySqlCommand(sql, con);
+
+            initializeTable(table, cmd.ExecuteReader());
+
+        }
+
+        private void btnAddRecord_Click(object sender, EventArgs e)
+        {
+            Popup popup = new Popup();
+            DialogResult dialogresult = popup.ShowDialog();
+            if (dialogresult == DialogResult.OK) initializeTable(table, cmd.ExecuteReader());
+            dropDownMenu.Items.Clear();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
