@@ -139,7 +139,7 @@
             // 
             // tbPassword
             // 
-            this.tbPassword.Location = new System.Drawing.Point(88, 36);
+            this.tbPassword.Location = new System.Drawing.Point(88, 104);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(128, 27);
             this.tbPassword.TabIndex = 9;
