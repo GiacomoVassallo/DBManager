@@ -35,8 +35,8 @@
             this.lbl1 = new System.Windows.Forms.Label();
             this.btnAddRecord = new System.Windows.Forms.Button();
             this.btnDeleteRecord = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbNome = new System.Windows.Forms.TextBox();
+            this.tbPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
@@ -45,7 +45,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(12, 118);
+            this.btnConnect.Location = new System.Drawing.Point(12, 69);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(204, 29);
             this.btnConnect.TabIndex = 0;
@@ -72,7 +72,7 @@
             this.dgrClassifica.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgrClassifica.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders;
             this.dgrClassifica.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgrClassifica.Location = new System.Drawing.Point(12, 153);
+            this.dgrClassifica.Location = new System.Drawing.Point(12, 148);
             this.dgrClassifica.Name = "dgrClassifica";
             this.dgrClassifica.RowHeadersWidth = 51;
             this.dgrClassifica.RowTemplate.Height = 29;
@@ -129,19 +129,21 @@
             this.btnDeleteRecord.UseVisualStyleBackColor = true;
             this.btnDeleteRecord.Click += new System.EventHandler(this.btnDeleteRecord_Click);
             // 
-            // textBox1
+            // tbNome
             // 
-            this.textBox1.Location = new System.Drawing.Point(88, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(128, 27);
-            this.textBox1.TabIndex = 8;
+            this.tbNome.Location = new System.Drawing.Point(88, 3);
+            this.tbNome.Name = "tbNome";
+            this.tbNome.Size = new System.Drawing.Size(128, 27);
+            this.tbNome.TabIndex = 8;
+            this.tbNome.Text = "root";
             // 
-            // textBox2
+            // tbPassword
             // 
-            this.textBox2.Location = new System.Drawing.Point(88, 36);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(128, 27);
-            this.textBox2.TabIndex = 9;
+            this.tbPassword.Location = new System.Drawing.Point(88, 36);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.Size = new System.Drawing.Size(128, 27);
+            this.tbPassword.TabIndex = 9;
+            this.tbPassword.Text = "root";
             // 
             // label1
             // 
@@ -168,8 +170,8 @@
             this.ClientSize = new System.Drawing.Size(1088, 498);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbPassword);
+            this.Controls.Add(this.tbNome);
             this.Controls.Add(this.btnDeleteRecord);
             this.Controls.Add(this.btnAddRecord);
             this.Controls.Add(this.lbl1);
@@ -195,8 +197,8 @@
         private Label lbl1;
         private Button btnAddRecord;
         private Button btnDeleteRecord;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox tbNome;
+        private TextBox tbPassword;
         private Label label1;
         private Label label2;
     }

@@ -18,16 +18,27 @@ namespace DBManager
         private void btnConnect_Click(object sender, EventArgs e)
         {
 
-            string cs = @"server=localhost;userid=root;password=root;database=campionato";
-            con = new MySqlConnection(cs);
-            con.Open();
+            try {
+                string cs = $"server=localhost;userid={tbNome.Text};password={tbPassword.Text};database=campionato";
+                con = new MySqlConnection(cs);
+                con.Open();
 
-            cmd = new MySqlCommand("sp_stampaClassifica", con) { CommandType = System.Data.CommandType.StoredProcedure };
-            cmd.Parameters.Add("Anno", MySqlDbType.VarChar).Value = "2022";
+                cmd = new MySqlCommand("sp_stampaClassifica", con) { CommandType = System.Data.CommandType.StoredProcedure };
+                cmd.Parameters.Add("Anno", MySqlDbType.VarChar).Value = "2022";
 
-            initializeTable(dgrClassifica, cmd.ExecuteReader());
+                initializeTable(dgrClassifica, cmd.ExecuteReader());
 
-            dropDownMenu.Enabled = true;
+                dropDownMenu.Enabled = true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Errore! Il login non è valido!\n" +
+                                "Si può stabilire una connessione solo se username e password sono corretti.");
+                
+                dropDownMenu.Enabled = false;
+                btnAddRecord.Enabled = false;
+                btnDeleteRecord.Enabled = false;
+            }
 
         }
 
@@ -120,9 +131,5 @@ namespace DBManager
             dropDownMenu.Items.Clear();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
