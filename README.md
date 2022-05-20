@@ -6,7 +6,6 @@ Viene sempre stampata anche la classifica della stagione 2022 usando la stored p
 
 Ho caricato:
 - Il codice sorgente
-- L'eseguibile per facilitare l'utilizzo della demo
 - Il file sql per creare il database.
 
 Ho scritto il codice in C# usando il pacchetto NuGet MySql.Data
