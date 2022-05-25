@@ -122,13 +122,25 @@ END $$
 delimiter ;
 
 delimiter $$
-create trigger trg_statisticheSoloSeGiocatore
+create trigger trg_caratteristicheSoloSeGiocatore
 BEFORE INSERT ON Caratteristiche
     FOR EACH ROW BEGIN
     IF (select Tipo from Tesserato
         where Tesserato.CodiceTessera = NEW.CodiceGiocatore) LIKE 'Allenatore'
-    THEN signal sqlstate '45002' SET message_text = 'Non bisogna registrare caratteristiche degli arbitri';
+    THEN signal sqlstate '45002' SET message_text = 'Non bisogna registrare caratteristiche degli allenatori';
     END IF;
+end$$
+delimiter ;
+
+delimiter $$
+CREATE TRIGGER trg_statisticheSoloSeGiocatore
+                BEFORE INSERT ON Statistiche
+                FOR EACH ROW BEGIN
+                IF (select Tipo from Tesserato
+                    where Tesserato.CodiceTessera = NEW.CodiceGiocatore) LIKE 'Allenatore'
+                THEN signal sqlstate '45012'
+                SET message_text = 'Non bisogna registrare statistiche degli allenatori';
+                END IF;
 end$$
 delimiter ;
 
@@ -940,17 +952,17 @@ VALUES ('G000003', 'Squadra3', 2022, 1, 7, 6, 9, 8, 5, 2, 8, 4);
 INSERT INTO Statistiche
 VALUES ('G000004', 'Squadra3', 2022, 1, 15, 3, 11, 10, 3, 0, 5, 3);
 INSERT INTO Statistiche
-VALUES ('G000008', 'Squadra3', 2022, 1, 7, 4, 2, 2, 3, 2, 6, 1);
+VALUES ('G000130', 'Squadra3', 2022, 1, 7, 4, 2, 2, 3, 2, 6, 1);
 INSERT INTO Statistiche
 VALUES ('G000022', 'Squadra3', 2022, 1, 8, 3, 0, 0, 3, 5, 4, 1);
 INSERT INTO Statistiche
-VALUES ('G000002', 'Squadra5', 2022, 1, 4, 3, 4, 2, 3, 8, 3, 0);
+VALUES ('G000131', 'Squadra5', 2022, 1, 4, 3, 4, 2, 3, 8, 3, 0);
 INSERT INTO Statistiche
 VALUES ('G000005', 'Squadra5', 2022, 1, 9, 5, 5, 3, 3, 7, 2, 4);
 INSERT INTO Statistiche
 VALUES ('G000000', 'Squadra5', 2022, 1, 9, 8, 5, 3, 3, 5, 8, 2);
 INSERT INTO Statistiche
-VALUES ('G000009', 'Squadra5', 2022, 1, 6, 5, 3, 2, 3, 3, 4, 1);
+VALUES ('G000132', 'Squadra5', 2022, 1, 6, 5, 3, 2, 3, 3, 4, 1);
 INSERT INTO Statistiche
 VALUES ('G000013', 'Squadra5', 2022, 1, 3, 3, 1, 0, 3, 2, 5, 0);
 
@@ -960,13 +972,7 @@ CALL sp_assegnaMVP(2022);
 CALL sp_assegnaAssistman(2022);
 CALL sp_assegnaMigliorMarcatore(2022);
 
-select t.Nome, t.Cognome, t.Squadra, max(3 * s1.3PT + 2 * s1.2PT) as Punti from statistiche s1
-inner join tesserato t on s1.CodiceGiocatore = t.CodiceTessera
-group by t.Squadra;
-
-select t.Nome, t.Cognome, c.Altezza, c.Peso, (c.Peso / (c.Altezza * c.Altezza)) as BMI from tesserato t
-inner join caratteristiche c on t.CodiceTessera = c.CodiceGiocatore
-order by BMI desc;
+select * from Tesserato;
 
 
 
