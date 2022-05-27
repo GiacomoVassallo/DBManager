@@ -82,7 +82,7 @@ create table Statistiche(   CodiceGiocatore VARCHAR(7),
                         );
 
 create view v_StatisticheStagionali as
-    select T.Nome as Nome, T.Cognome as Cognome, T.Squadra as Squadra,
+    select T.Nome as Nome, T.Cognome as Cognome, T.Squadra as Squadra, S.Anno as Stagione,
            2 * sum(S.2PT) + 3 * sum(S.3PT) as PTI,
            sum(2PT)/sum(2PA) * 100 as DPP,
            sum(3PT)/sum(3PA) * 100 as TPP,
@@ -91,7 +91,7 @@ create view v_StatisticheStagionali as
     from Statistiche S
     inner join Tesserato T on S.CodiceGiocatore = T.CodiceTessera
     where T.Tipo = 'Giocatore'
-    group by T.CodiceTessera;
+    group by T.CodiceTessera, S.Anno;
 
 delimiter $$
 create trigger trg_statisticheCorrette
@@ -203,7 +203,7 @@ BEGIN
            2*sum(2PT) - 0.75*sum(2PA) + 3*sum(3PT) - 0.84 * sum(3PA) + sum(AST) + sum(BLK) + sum(STL) + sum(REB) as SimplePER
     from Statistiche S
     inner join Tesserato T on S.CodiceGiocatore = T.CodiceTessera
-    where T.Tipo = 'Giocatore'
+    where T.Tipo = 'Giocatore' and S.Anno = Edizione
     group by T.CodiceTessera
     order by SimplePER desc
     limit 1) as Best);
@@ -219,6 +219,7 @@ create procedure sp_assegnaAssistman(IN Edizione INT)
 BEGIN
     set @assistMan = (select Assistman from (select CodiceGiocatore as AssistMan, sum(AST) as AST
                 from Statistiche S
+                where S.Anno = Edizione
                 group by CodiceGiocatore
                 order by AST desc
                 limit 1) as best);
@@ -235,6 +236,7 @@ BEGIN
     set @migliorMarcatore = (select migliorMarcatore from (select CodiceGiocatore as migliorMarcatore,
                 2 * sum(S.2PT) + 3 * sum(S.3PT) as PTI
                 from Statistiche S
+                where S.Anno = Edizione
                 group by CodiceGiocatore
                 order by PTI desc
     limit 1) as best);
@@ -935,6 +937,8 @@ INSERT INTO partita
 VALUES (2022, 10, 'Squadra3', 'Squadra2', 102, 103, '2022-11-1', 'A000004');
 INSERT INTO partita
 VALUES (2022, 10, 'Squadra5', 'Squadra4', 110, 109, '2022-11-1', 'A000001');
+INSERT INTO partita
+VALUES (2021, 1, 'Squadra5', 'Squadra4', 110, 109, '2022-11-1', 'A000001');
 
 
 INSERT INTO Statistiche
@@ -965,6 +969,8 @@ INSERT INTO Statistiche
 VALUES ('G000132', 'Squadra5', 2022, 1, 6, 5, 3, 2, 3, 3, 4, 1);
 INSERT INTO Statistiche
 VALUES ('G000013', 'Squadra5', 2022, 1, 3, 3, 1, 0, 3, 2, 5, 0);
+INSERT INTO Statistiche
+VALUES ('G000010', 'Squadra5', 2021, 1, 12, 11, 11, 10, 3, 0, 1, 2);
 
 
 CALL sp_decretaVincitore(2022);
