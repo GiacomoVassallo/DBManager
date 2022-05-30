@@ -24,8 +24,7 @@ create table Tesserato( CodiceTessera VARCHAR(7),
 create table Caratteristiche(   CodiceGiocatore VARCHAR(7) PRIMARY KEY,
                                 Altezza FLOAT,
                                 Peso INT,
-                                Ruolo VARCHAR(2) CHECK (Ruolo LIKE 'A' OR
-                                                        Ruolo LIKE 'PG' OR
+                                Ruolo VARCHAR(2) CHECK (Ruolo LIKE 'PG' OR
                                                         Ruolo LIKE 'SG' OR
                                                         Ruolo LIKE 'SF' OR
                                                         Ruolo LIKE 'PF' OR
